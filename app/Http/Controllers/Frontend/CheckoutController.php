@@ -33,7 +33,7 @@ class CheckoutController extends Controller
 
             $individualInfo = new IndividualInfo(
                 bakongAccountID: 'sopheaktra_peng@aclb',
-                merchantName: 'Tak Tou',
+                merchantName: 'Rin Phera',
                 merchantCity: 'PHNOM PENH',
                 currency: KHQRData::CURRENCY_KHR,
                 amount: $totalAmount
@@ -122,14 +122,13 @@ class CheckoutController extends Controller
         $response = Resend::emails()->send([
             'from' => env('MAIL_FROM_ADDRESS'),
             'to' => $user->email, // send to the logged-in freelancer/buyer
-            'subject' => '🎉 Payment Successful!',
+            'subject' => 'Payment Successful!',
             'html' => "
             <h1>Hello {$user->name}</h1>
-            <p>Thank you for your purchase! ✅</p>
+            <p>Thank you for your purchase!</p>
             <p>Here are the details of your order:</p>
             <pre>{$productDetails}</pre>
             <p><strong>Total Paid:</strong> \${$totalAmount}</p>
-            <p>We hope you enjoy your product/service! 🌐</p>
         ",
         ]);
 
@@ -158,8 +157,8 @@ class CheckoutController extends Controller
             $ownerMessage .= "- {$product->name} - {$quantity} x (\${$price}) = \${$total}\n";
         }
 
-        $ownerMessage .= "\n✅ Payment confirmed via Bakong.\n";
-        $ownerMessage .= "🌐 Check dashboard for details.";
+        $ownerMessage .= "\nPayment confirmed via Bakong.\n";
+        $ownerMessage .= "Check dashboard for details.";
 
 
         $response = Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
